@@ -5,7 +5,7 @@
     <title>Document</title>
 </head>
 <body>
-    <input type="text" class="flavor" placeholder="Choose flavor">
+    <input type="text" class="flavor" placeholder="Choose flavor *">
     <textarea name="comment" class="comment" placeholder="Your comment (optional)"></textarea>
     <button class="submit">Order a hookah</button>
 
@@ -29,6 +29,10 @@
             border: 1px solid green;
         }
 
+        .flavor.empty {
+            border-color: red;
+        }
+
         .comment {
             padding: 10px 15px;
             width: 80vw;
@@ -41,19 +45,21 @@
         .submit {
             height: 80vw;
             width: 80vw;
-            max-height: 250px;
-            max-width: 250px;
+            max-height: 150px;
+            max-width: 150px;
             border-radius: 100%;
             background-color: green;
+            border: 2px solid green;
             text-transform: uppercase;
-            font-size: 24px;
+            font-size: 20px;
             color: white;
             cursor: pointer;
-            transition: 0.5s;
+            transition: 0.3s;
         }
 
         .submit:hover {
-            transform: scale(1.03);
+            background-color: white;
+            color: green;
         }
     </style>
 
@@ -62,7 +68,15 @@
         const comment = document.querySelector('.comment')
         const submit = document.querySelector('.submit')
 
+        flavor.onclick = () => flavor.classList.remove('empty')
+
         submit.onclick = async () => {
+            if (!flavor.value) {
+                flavor.classList.add('empty')
+                alert('You have to choose flavor')
+                return
+            }
+
             const res = await fetch(
                 '/create-order',
                 {
