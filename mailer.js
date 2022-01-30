@@ -8,7 +8,7 @@ class Mailer {
   sendOrder(flavor, comment) {
     this.bot.sendMessage(
       this.chatId,
-      `Поступил заказ на кальян ${flavor} \n\n ${comment ? comment : ''}`
+      `Поступил заказ \n\n ${flavor} \n\n ${comment ? comment : ''}`
     )
   }s
 }
