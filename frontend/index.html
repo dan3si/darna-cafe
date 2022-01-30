@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" class="flavor" placeholder="Choose flavor">
+    <textarea name="comment" class="comment" placeholder="Your comment (optional)"></textarea>
+    <button class="submit">Order a hookah</button>
+
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .flavor {
+            padding: 10px 15px;
+            width: 80vw;
+            max-height: 30px;
+            max-width: 250px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid green;
+        }
+
+        .comment {
+            padding: 10px 15px;
+            width: 80vw;
+            max-width: 250px;
+            border-radius: 8px;
+            border: 1px solid green;
+            resize: vertical;
+        }
+
+        .submit {
+            height: 80vw;
+            width: 80vw;
+            max-height: 250px;
+            max-width: 250px;
+            border-radius: 100%;
+            background-color: green;
+            text-transform: uppercase;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .submit:hover {
+            transform: scale(1.03);
+        }
+    </style>
+
+    <script>
+        const flavor = document.querySelector('.flavor')
+        const comment = document.querySelector('.comment')
+        const submit = document.querySelector('.submit')
+
+        submit.onclick = async () => {
+            const res = await fetch(
+                '/create-order',
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        flavor: flavor.value,
+                        comment: comment.value
+                    })
+                }
+            )
+
+            if (res.ok) {
+                alert('Thank you! Your order has been accepted')
+                flavor.value = null
+                comment.value = null
+            } else {
+                alert('Error, your order has not been received. Try again')
+            }
+        }
+    </script>
+</body>
+</html>
